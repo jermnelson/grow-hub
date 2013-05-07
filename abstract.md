@@ -7,7 +7,8 @@ Abstract
 
 GRO-HUB is a distributed open source internet built upon flowerplant nodes which are both sensor-enriched functional planters for gardening and hotspots for internet connectivity.  
 
-Each GRO-HUB is a flowerpot epuipped with a full sensor suite for gardening (photoelectric sensor for light levels, accelerometer for accidental tipping, moisture sensor for watering notification) and a Raspberry Pi Linux computer [raspberry pi](http://www.raspberrypi.org/) 
+Each GRO-HUB is a flowerpot epuipped with a full sensor suite for gardening (photoelectric sensor for light levels, accelerometer for accidental tipping, moisture sensor for watering notification) and a Raspberry Pi Linux computer 
+see link: [raspberry pi](http://www.raspberrypi.org/) 
 
 Abstract
 
