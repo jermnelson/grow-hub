@@ -14,6 +14,11 @@ Abstract
 GRO-HUB is a distributed open source 
 
 
+decentralized
+egalitarian
+open-source
+more of a mesh than a server farm
+cloud
 
 
 
