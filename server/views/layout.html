@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+   <title>{% block main_title %}Grow-Hub Sensor Server{% endblock %}</title>
+   {% block css %}
+   <style>
+    body {
+     font-family: Courier, serif;
+    }
+   </style>
+   {% endblock %}
+ </head>
+ <body>
+  {% block header %}
+  <header>
+   <h1>Grow-Hub Sensor Server</h1>
+  </header>
+  {% endblock %}
+  {% block sensor_news %}
+  <article>
+  </article>
+  {% endblock %}
+  {% block footer %}
+  <footer>
+   &copy; {{ now.year }} Jeremy Nelson, Timothy Semple
+  </footer>
+  {% endblock %}  
+ </body>
+</html>
