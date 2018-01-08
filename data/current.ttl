@@ -4,7 +4,7 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://garden.local/c5232b58-f3e8-11e7-bf53-a8667f19014b> a schema:HousePlant ;
+<http://garden.local/plant/c5232b58-f3e8-11e7-bf53-a8667f19014b> a schema:HousePlant ;
     rdfs:label "Golden Pothos"@en,
         "Epipremnum aureum"@la ;
     schema:uploadDate "2018-01-07T20:38:15.193458" .

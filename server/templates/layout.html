@@ -13,16 +13,16 @@
  <body>
   {% block header %}
   <header>
-   <h1>Grow-Hub Sensor Server</h1>
+   <h1>Grow-Hub Server</h1>
   </header>
   {% endblock %}
-  {% block sensor_news %}
+  {% block main %}
   <article>
   </article>
   {% endblock %}
   {% block footer %}
   <footer>
-   &copy; {{ now.year }} Jeremy Nelson, Timothy Semple
+   &copy; {% if now %}{{ now.year }}{% endif %} Jeremy Nelson, Timothy Semple
   </footer>
   {% endblock %}  
  </body>
