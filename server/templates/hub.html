@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
-{% block sensor_news %}
+{% block main %}
 <article type="data-sensor">
-  <h1>Current UTC</h1>
-  <p>{{ now.isoformat() }}</p>
+  <h1>Time</h1>
+  <p>{{ now.isoformat() }}, total triples {{ stats.triples }}</p>
+  <h3><a href="{{ url_for('plant') }}">Plants</a></h3>
 </article>
 {% endblock %}

@@ -1,8 +1,23 @@
 {% extends 'layout.html' %}
 
+{% set uuid = plant.split("/")[-1] %}
+
 {% block main %}
 <h1>
-    {{ get_label(plant, 'eng') }}
+    {{ plant|get_label('en') }} 
 </h1>
-
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<h3>Messages</h3>
+<ul>
+    {% for row in messages %}
+    <li>{{ row }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<form action="{{ url_for('plant', uuid=uuid) }}" method="POST">
+    <input type="hidden" name="action" value="water"></input>
+    <input type="submit" value="Water"></input>
+</form>
 {% endblock %}
