@@ -20,9 +20,9 @@ app.secret_key = 'GROWHUB'
 
 PROJECT_ROOT = os.path.split(os.path.dirname(os.path.abspath((__file__))))[0]
 KNOWLEGE_GRAPH = rdflib.Graph()
-KNOWLEGE_GRAPH.parse(os.path.join(PROJECT_ROOT, "data/current.ttl"),
+KNOWLEGE_GRAPH.parse(os.path.join(PROJECT_ROOT, "instance/current.ttl"),
                      format='turtle')
-LOG_PATH = os.path.join(PROJECT_ROOT, "data/logs.db")
+LOG_PATH = os.path.join(PROJECT_ROOT, "instance/logs.db")
 SCHEMA = rdflib.Namespace("http://schema.org/")
 
 # Helper Functions
