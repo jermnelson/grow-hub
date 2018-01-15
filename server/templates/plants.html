@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<h2>Plants</h2>
+<ul>
+    {% for plant in plants %}
+    {% set key = plant.split("/")[-1] %}
+    <li><a href="{{ url_for('plant', uuid=key) }}">{{  plant|get_label('en') }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
