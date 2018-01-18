@@ -8,6 +8,7 @@ __author__ = "Jeremy Nelson, Timothy Semple"
 import datetime
 import os
 import sqlite3
+import uuid
 
 import rdflib
 
@@ -26,12 +27,50 @@ LOG_PATH = os.path.join(PROJECT_ROOT, "instance/logs.db")
 SCHEMA = rdflib.Namespace("http://schema.org/")
 
 # Helper Functions
+def __add_plant__(name, latin_name, purchased_date, type_of=SCHEMA.HousePlant):
+    new_plant_iri = rdflib.URIRef(
+        "http://garden.local/plant/{}".format(uuid.uuid1()))
+    KNOWLEGE_GRAPH.add(
+        (new_plant_iri, 
+         rdflib.RDF.type, 
+         type_of))
+    KNOWLEGE_GRAPH.add(
+        (new_plant_iri, 
+         rdflib.RDFS.label, 
+         rdflib.Literal(name, lang="en")))
+    KNOWLEGE_GRAPH.add(
+        (new_plant_iri, 
+         rdflib.RDFS.label, 
+         rdflib.Literal(latin_name, lang="la")))
+    KNOWLEGE_GRAPH.add(
+        (new_plant_iri, 
+         SCHEMA.name, 
+         rdflib.Literal(name, lang="en")))
+    KNOWLEGE_GRAPH.add(
+        (new_plant_iri, 
+         SCHEMA.purchasedDate, 
+         rdflib.Literal(purchased_date)))
+    with open(os.path.join(PROJECT_ROOT, "instance/current.ttl"), "wb+") as fo:
+        fo.write(KNOWLEGE_GRAPH.serialize(format='turtle'))
+    return new_plant_iri
+    
+
 def __plant_crud__(form, plant_iri=None):
     msg = None
-    action = form.get('action')
-    description = form.get('description')
     conn = sqlite3.connect(LOG_PATH)
     cur = conn.cursor()
+    action = form.get('action')
+    # Creates a new Plant and save to file
+    if action.startswith("create"):
+        name = form.get("name")
+        latin_name = form.get("latin")
+        purchased_date = form.get("purchasedDate")
+        plant_iri = __add_plant__(name, latin_name, purchased_date)
+        cur.execute("INSERT INTO Plant (iri) VALUES (?,)",
+            (plant_iri,))
+        conn.commit()
+        msg = "Added plant {} ({})".format(name, latin_name)
+    description = form.get('description')
     plant_id_result = cur.execute("SELECT id FROM Plant WHERE iri=?",
         (plant_iri,)).fetchone()
     if len(plant_id_result) < 1:
@@ -43,11 +82,13 @@ def __plant_crud__(form, plant_iri=None):
         cur.execute("""INSERT INTO ActivityLog (activity, plant, description) 
 VALUES (?,?,?);""",
             (1, plant_id, description))
-        msg = "Watered {}".format(KNOWLEGE_GRAPH.value(
+        msg = "Watered {} on {}".format(KNOWLEGE_GRAPH.value(
             subject=plant_iri,
-            predicate=SCHEMA.name))
+            predicate=SCHEMA.name),
+            datetime.datetime.utcnow().isoformat())
+        conn.commit()
     cur.close()
-    con.close()
+    conn.close()
     return msg
 
 # Template Filter Functions
@@ -64,6 +105,9 @@ def label_(entity_iri, lang_code):
 @app.route("/plant/<path:uuid>", methods=["GET", "POST"])
 def plant(uuid=None):
     if uuid is None:
+        # Add a new plant
+        if request.method.startswith("POST"):
+            msg = __plant_curd__(request.form)    
         plants = [plant_iri for plant_iri in KNOWLEGE_GRAPH.subjects(
                                                 predicate=rdflib.RDF.type,
                                                 object=SCHEMA.HousePlant)]
@@ -77,10 +121,25 @@ def plant(uuid=None):
         abort(401)
     if request.method.startswith("POST"):
         msg = __plant_crud__(request.form, plant_iri)
-        flash("You {} plant {}".format(request.form.get('action'), uuid))
+        flash(msg)
         return redirect(url_for('plant', uuid=uuid))
+    plant_activity = []
+    con = sqlite3.connect(LOG_PATH)
+    cur = con.cursor()
+    cur.execute("""SELECT ActivityLog.taken, ActivityLog.description, Activity.name
+FROM ActivityLog, Activity, Plant
+WHERE ActivityLog.activity = Activity.id AND 
+ActivityLog.plant = Plant.id AND
+Plant.iri=?""", (plant_iri,))
+    for row in cur.fetchall():
+        plant_activity.append({"date": row[0],
+                               "description": row[1],
+                               "activity": row[2]})
+    cur.close()
+    con.close()
     return render_template("plant.html",
-        plant=plant_iri)
+        plant=plant_iri,
+        activity=plant_activity)
 
 
 @app.route("/")

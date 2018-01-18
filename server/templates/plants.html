@@ -8,4 +8,11 @@
     <li><a href="{{ url_for('plant', uuid=key) }}">{{  plant|get_label('en') }}</a></li>
     {% endfor %}
 </ul>
+<form action="{{ url_for('plant') }}" method="POST">
+    <input type="hidden" name="action" value="create" />
+    <input name="name" placeholder="English name of plant"><br>
+    <input name="latin" placeholder="Latin or Scientific name of plant"><br>
+    <input name="purchasedDate" placeholder="Date plant was purchased"><br>
+    <input type="submit" value="Add Plant">
+</form> 
 {% endblock %}

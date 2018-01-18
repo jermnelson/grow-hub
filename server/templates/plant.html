@@ -20,4 +20,26 @@
     <input type="hidden" name="action" value="water"></input>
     <input type="submit" value="Water"></input>
 </form>
+<div>
+    <h3>Activity Log</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Activity</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in activity %}
+            <tr>
+                <td>{{ row.date }}</td>
+                <td>{{ row.activity }}</td>
+                <td>{{ row.description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody> 
+    </table>
+
+</div>
 {% endblock %}
