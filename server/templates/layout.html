@@ -3,11 +3,7 @@
  <head>
    <title>{% block main_title %}Grow-Hub Sensor Server{% endblock %}</title>
    {% block css %}
-   <style>
-    body {
-     font-family: Courier, serif;
-    }
-   </style>
+   <link rel="stylesheet" href="{{url_for('static', filename='css/default.css') }}" />
    {% endblock %}
  </head>
  <body>

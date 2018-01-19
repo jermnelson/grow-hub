@@ -1,0 +1,117 @@
+body {
+    display: grid;
+    font-family: Courier, serif;
+    grid-template-rows: 80px min-content min-content 1fr;
+    grid-template-columns: 15em 1fr;
+}
+
+#masthead {
+    grid-row: 1;
+    grid-column: 1 /span 2;
+}
+
+#main {
+    grid-row: 2;
+    grid-column: 2;
+
+}
+
+#sidebar {
+    //background-color: rgb(0, 255, 170);
+    grid-row: 2;
+    grid-column: 1
+}
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+

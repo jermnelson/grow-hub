@@ -107,6 +107,7 @@ def plant(uuid=None):
     if uuid is None:
         # Add a new plant
         if request.method.startswith("POST"):
+            print("Shourld route to {}".format(request.form.keys()))
             msg = __plant_curd__(request.form)    
         plants = [plant_iri for plant_iri in KNOWLEGE_GRAPH.subjects(
                                                 predicate=rdflib.RDF.type,
